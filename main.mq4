@@ -57,30 +57,5 @@ void OnTick()
             buy_order = 0;
         }
     }
-
-    // check for sell conditions
-    if (ema8 < ema14 && ema14 < ema21 && ema21 < ema50 && ema50 < ema100 && ema100 < ema200 && adx > adx_threshold && di_plus < adx_threshold && Bid < sar)
-    {
-        // check if there is no existing sell order
-        if (sell_order == 0)
-        {
-            // open sell order
-            Alert("BUY SHORT HAPPENED");
-            sell_order = OrderSend(Symbol(), OP_SELL, lotsize, Bid, 0, NormalizeDouble(Ask + stoploss * Point, Digits), NormalizeDouble(Ask - takeprofit * Point, Digits), "Sell", 0, 0, Red);
-        }
-    }
-    else
-    {
-        // check if there is an existing sell order
-        if (sell_order != 0)
-        {
-            // close buy order
-            Alert("SELL SHORT HAPPENED");
-            OrderClose(sell_order, lotsize, Bid, 0, Yellow);
-            sell_order = 0;
-        }
-    }
-    
-    //Alert(MarketInfo(NULL, MODE_MAXLOT));
     
 }
